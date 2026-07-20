@@ -1,0 +1,72 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.liberateinc.com/docs/calling-a-workflow
+docs: https://docs.liberateinc.com/docs/calling-a-workflow
+name: Liberate Orchestration Platform authentication
+description: >-
+  The Liberate Orchestration Platform API authenticates with a bearer token issued by Liberate.
+  Tokens are scoped per customer and per environment — every customer has both a production and a
+  QA environment, and each has its own unique endpoint URL and token. The exact curl invocation
+  including the correct host is published in the Start Event properties of each workflow inside the
+  Liberate application.
+apis:
+  - name: Liberate Orchestration Platform API
+    spec: openapi/liberate-innovations-orchestration-openapi.yml
+    schemes:
+      - id: bearerAuth
+        type: http
+        scheme: bearer
+        in: header
+        header: Authorization
+        format: 'Authorization: Bearer <token>'
+        description: >-
+          A unique bearer token obtained from Liberate. Required on every documented operation
+          (startWorkflow, sendIntermediateEvent).
+        issued_by: Liberate (provisioned, not self-service)
+        self_service: false
+        rotation: not documented publicly
+        environments:
+          - name: production
+            note: Separate token and endpoint URL per customer.
+          - name: qa
+            note: >-
+              Every customer has a QA environment alongside production, with its own endpoint and
+              token. Releases are deployed to QA or production targets.
+        applies_to_operations:
+          - startWorkflow
+          - sendIntermediateEvent
+        evidence: >-
+          'Please note that this request requires a unique bearer token obtained from Liberate.'
+          — https://docs.liberateinc.com/docs/calling-a-workflow
+oauth2: false
+openid_connect: false
+mutual_tls: false
+api_key: false
+notes:
+  - >-
+    OAuth 2 appears in the Liberate documentation only as an OUTBOUND connection type — one of the
+    authentication methods (alongside No Authentication, Basic, Bearer Token, API Key, and
+    PostgreSQL) that a Liberate Connection can use when calling an external system from a REST Task.
+    It is not an inbound authentication option for the Liberate API itself. See
+    https://docs.liberateinc.com/docs/connections.
+  - >-
+    Application (console) sign-in is separate from API authentication. Liberate supports SAML
+    single sign-on for the app, brokered through Amazon Cognito; the Google Workspace setup guide
+    documents an ACS URL of the form
+    https://<tenant>.auth.us-west-2.amazoncognito.com/saml2/idpresponse and an Entity ID of the
+    form urn:amazon:cognito:sp:<user-pool-id>. See
+    https://docs.liberateinc.com/docs/google-workspace.
+  - >-
+    No /.well-known/openid-configuration or /.well-known/oauth-authorization-server document is
+    published on any Liberate host. See well-known/liberate-innovations-well-known.yml.
+sso:
+  supported: true
+  protocol: SAML 2.0
+  broker: Amazon Cognito
+  identity_providers_documented:
+    - Google Workspace
+  provisioning: >-
+    Customer downloads IdP metadata and sends it to the Liberate engineering team, who finalize the
+    SSO configuration.
+  docs: https://docs.liberateinc.com/docs/google-workspace
+  evidence: https://www.liberateinc.com/security (FAQ confirms SSO support)
