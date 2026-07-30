@@ -1,23 +1,180 @@
 aid: liberate-innovations
 name: Liberate Innovations
-description: Liberate Innovations is a company surfaced as a portfolio company of battery-ventures and
-  added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Liberate Innovations, Inc. (trading as Liberate) is a Palo Alto, California company building
+  insurance-native AI agents for sales, servicing, and claims. Its voice, email, and SMS AI resolves
+  customer inquiries end to end — verifying identity, gathering loss details, and filing a claim
+  without a human rep — and writes the results straight into the carrier's or agency's core systems.
+  Underneath the customer-facing agents sits the Liberate Orchestration Platform, a visual workflow
+  engine where developers compose modular workflows from connections, events, tasks, and decision
+  tables, with JSONata transformations, release management across QA and production environments, and
+  correlation-level session reporting. The platform is driven over a small documented HTTP API that
+  starts workflows by slug and advances paused instances with intermediate events. Liberate
+  integrates with Guidewire, Duck Creek, Salesforce, Vertafore, Applied, EZLynx, Insuresoft,
+  TurboRater, Verisk, CCC, CoreLogic, Snapsheet, and Microsoft Outlook.
+accessModel:
+  pricing: unknown
+  onboarding: open
+  trial: false
+  try_now: false
+  public: true
+  label: Open access
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/69d93976ca90059d5696cd0b/69d93976ca90059d5696cef7_Webclip.png
 url: https://raw.githubusercontent.com/api-evangelist/liberate-innovations/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - battery-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: live-api-and-developer-hub
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Insurance
+- InsurTech
+- Artificial Intelligence
+- Voice AI
+- Conversational AI
+- Workflow Orchestration
+- Claims Automation
+- Integration
+- Contact Center
+apis:
+- aid: liberate-innovations:liberate-innovations-events-api
+  name: Liberate Innovations Events API
+  description: Advance workflow instances that are paused on an intermediate event.
+  humanURL: https://docs.liberateinc.com/
+  baseURL: https://integration.liberateinc.io
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/liberate-innovations-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.liberateinc.com/docs/overview
+  - type: APIReference
+    url: https://docs.liberateinc.com/docs/calling-a-workflow
+  - type: GettingStarted
+    url: https://docs.liberateinc.com/docs/calling-a-workflow
+  - type: Authentication
+    url: authentication/liberate-innovations-authentication.yml
+  - type: Conventions
+    url: conventions/liberate-innovations-conventions.yml
+  - type: DataModel
+    url: data-model/liberate-innovations-data-model.yml
+  - type: Conformance
+    url: conformance/liberate-innovations-conformance.yml
+  - type: Sandbox
+    url: sandbox/liberate-innovations-sandbox.yml
+  - type: Lifecycle
+    url: lifecycle/liberate-innovations-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/liberate-innovations-changelog.yml
+  - type: ChangeLog
+    url: https://docs.liberateinc.com/changelog
+  - type: LLMsTxt
+    url: llms/liberate-innovations-llms.txt
+- aid: liberate-innovations:liberate-innovations-workflows-api
+  name: Liberate Innovations Workflows API
+  description: Start workflow orchestrations and pass context data into them.
+  humanURL: https://docs.liberateinc.com/
+  baseURL: https://integration.liberateinc.io
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/liberate-innovations-workflows-api-openapi.yml
+  - type: Documentation
+    url: https://docs.liberateinc.com/docs/overview
+  - type: APIReference
+    url: https://docs.liberateinc.com/docs/calling-a-workflow
+  - type: GettingStarted
+    url: https://docs.liberateinc.com/docs/calling-a-workflow
+  - type: Authentication
+    url: authentication/liberate-innovations-authentication.yml
+  - type: Conventions
+    url: conventions/liberate-innovations-conventions.yml
+  - type: DataModel
+    url: data-model/liberate-innovations-data-model.yml
+  - type: Conformance
+    url: conformance/liberate-innovations-conformance.yml
+  - type: Sandbox
+    url: sandbox/liberate-innovations-sandbox.yml
+  - type: Lifecycle
+    url: lifecycle/liberate-innovations-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/liberate-innovations-changelog.yml
+  - type: ChangeLog
+    url: https://docs.liberateinc.com/changelog
+  - type: LLMsTxt
+    url: llms/liberate-innovations-llms.txt
+common:
+- type: DomainSecurity
+  url: security/liberate-innovations-domain-security.yml
+- type: DeveloperPortal
+  url: https://docs.liberateinc.com/
+- type: Documentation
+  url: https://docs.liberateinc.com/docs/overview
+- type: APIReference
+  url: https://docs.liberateinc.com/docs/calling-a-workflow
+- type: GettingStarted
+  url: https://docs.liberateinc.com/docs/overview
+- type: Website
+  url: https://www.liberateinc.com/
+- type: Blog
+  url: https://www.liberateinc.com/blog
+- type: News
+  url: https://www.liberateinc.com/news
+- type: Integrations
+  url: https://www.liberateinc.com/integrations
+- type: Glossary
+  url: https://www.liberateinc.com/glossary
+- type: Resources
+  url: https://www.liberateinc.com/resources
+- type: Careers
+  url: https://www.liberateinc.com/careers
+- type: About
+  url: https://www.liberateinc.com/about
+- type: SignUp
+  url: https://www.liberateinc.com/request-demo
+- type: Login
+  url: https://app.liberateinc.com/login
+- type: Support
+  url: https://signup.liberateinc.com/contact-us
+- type: Discussions
+  url: https://docs.liberateinc.com/discuss
+- type: ChangeLog
+  url: https://docs.liberateinc.com/changelog
+- type: TermsOfService
+  url: https://www.liberateinc.com/legal/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.liberateinc.com/legal/privacy-policy
+- type: Compliance
+  url: security/liberate-innovations-trust-center.yml
+- type: TrustCenter
+  url: https://app.vanta.com/liberateinc.com/trust/a3f4px3jh3gd2prixhl6
+- type: SecurityOverview
+  url: https://www.liberateinc.com/security
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/liberate-innovations-llms.txt
+- type: LinkedIn
+  url: https://www.linkedin.com/company/liberate-inc/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
