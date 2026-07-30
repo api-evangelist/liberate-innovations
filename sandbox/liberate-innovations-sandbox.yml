@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.liberateinc.com/docs/calling-a-workflow
+docs: https://docs.liberateinc.com/docs/preview-mode
+name: Liberate Orchestration Platform test and pre-production surface
+description: >-
+  Liberate does not offer a public, self-service sandbox — there is no open sign-up, no test API
+  key, and no anonymous playground. What it does publish is a per-customer pre-production story:
+  every Liberate customer is provisioned a QA environment alongside production, each with its own
+  endpoint URL and bearer token, plus an in-canvas Preview Mode for exercising a workflow before
+  release. These are recorded here because they are the real, documented way a Liberate developer
+  tests, but they are gated behind a provisioned account.
+
+self_service: false
+public_sandbox: false
+signup_url: https://www.liberateinc.com/request-demo
+signup_model: sales-led (request a demo)
+
+environments:
+  - name: production
+    per_tenant_url: true
+    credential: bearer token issued by Liberate
+    notes: >-
+      Each customer has their own unique endpoint URL. The published production example is
+      https://integration.liberateinc.io.
+  - name: qa
+    per_tenant_url: true
+    credential: separate bearer token issued by Liberate
+    notes: >-
+      "Every customer has a production and QA environment. Start Events contain the curl requests
+      for each environment." Releases are deployed from the release tab to either target.
+    evidence: https://docs.liberateinc.com/docs/calling-a-workflow
+
+test_tooling:
+  - name: Preview Mode
+    type: in-canvas execution preview
+    docs: https://docs.liberateinc.com/docs/preview-mode
+    description: >-
+      Exercise a workflow from the Liberate canvas before cutting a release.
+  - name: Connection environment separation
+    type: credential isolation
+    docs: https://docs.liberateinc.com/docs/connections
+    description: >-
+      Every Connection type — No Authentication, Basic Authentication, Bearer Token, API Key,
+      OAuth 2, and PostgreSQL — is configured with separate base URLs and separate credentials or
+      secrets for the QA environment and the production environment, so a workflow under test points
+      at a partner's test system without any change to the workflow itself.
+  - name: Sample context
+    type: fixture
+    docs: https://docs.liberateinc.com/docs/calling-a-workflow-instance
+    description: >-
+      Workflow instances are configured against a defined sample context — representative JSON that
+      stands in for live session data while building and mapping.
+
+test_credentials:
+  published: false
+  notes: >-
+    No published test tokens, test cards, test bank accounts, or hosted test fixtures. Bearer tokens
+    are provisioned per customer per environment. The token strings that appear in the documentation
+    curl examples are illustrative placeholders, not working credentials, and are deliberately not
+    reproduced here as usable values.
+
+test_clocks: false
+time_simulation: false
+trigger_fixtures: false

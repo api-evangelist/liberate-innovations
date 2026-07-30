@@ -1,0 +1,16 @@
+{
+  "provider": "liberate-innovations",
+  "sources": [
+    "liberate-innovations-events-api-openapi.yml",
+    "liberate-innovations-workflows-api-openapi.yml"
+  ],
+  "outputs": [
+    "liberate-innovations-events-api-openapi.yml",
+    "liberate-innovations-workflows-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

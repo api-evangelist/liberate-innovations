@@ -1,0 +1,87 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.liberateinc.com/docs/release-management
+docs: https://docs.liberateinc.com/docs/release-management
+name: Liberate Orchestration Platform lifecycle
+description: >-
+  Versioning, release, and deprecation posture for the Liberate Orchestration Platform, gathered
+  from the public developer hub and by probing Liberate's hosts. Liberate's published lifecycle
+  story is about the workflows a customer authors — revisions, releases, environment promotion, and
+  rollback — rather than about versioning the HTTP contract, which has remained a single documented
+  v1.0 surface.
+
+versioning:
+  scheme: documentation version selector
+  current_version: '1.0'
+  in_url: false
+  in_header: false
+  policy_published: false
+  notes: >-
+    The developer hub carries a v1.0 selector. Neither documented operation carries a version
+    segment or version header.
+
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  notes: >-
+    No deprecation policy, no notice window, and no RFC 8594 Sunset/Deprecation header usage are
+    published. No operation in
+    openapi/liberate-innovations-orchestration-openapi.yml is marked deprecated.
+
+status_page:
+  published: false
+  probed:
+    - url: https://status.liberateinc.com/
+      status: 000
+      result: does not resolve
+  notes: >-
+    No public status page or uptime history was found. The marketing security page claims
+    "near-perfect uptime" but publishes no SLA figure, no incident history, and no subscribable
+    status feed.
+
+sla:
+  published: false
+  notes: >-
+    No public service level agreement. Commercial terms are handled through the Terms of Service
+    and individual customer contracts.
+
+release_management:
+  published: true
+  scope: customer-authored workflows
+  docs: https://docs.liberateinc.com/docs/release-management
+  capabilities:
+    - name: Autosaving revisions
+      detail: A revision is saved automatically whenever the workflow differs from the last saved state.
+    - name: Version history
+      detail: >-
+        The full list of saved revisions is reachable from the "Version History" control at the top
+        of the Liberate canvas.
+    - name: Releases
+      detail: >-
+        A release can be cut from the current version or from any earlier revision. Both releases
+        and revisions can carry release notes describing changes, updates, or bug fixes.
+    - name: Environment promotion
+      detail: >-
+        Releases are deployed from the release tab to a chosen target environment — QA or
+        production. Every customer has both.
+    - name: Rollback
+      detail: >-
+        A previous known-good release can be redeployed to revert a problematic deployment.
+  caveat: >-
+    Rollback applies to workflow releases. The Entity Management documentation notes the platform
+    does not have built-in rollback for uploaded CSV entity files, so replacing a current file
+    affects all QA and production workflows that reference it.
+
+changelog:
+  published: true
+  url: https://docs.liberateinc.com/changelog
+  detail: changelog/liberate-innovations-changelog.yml
+
+environments:
+  - name: production
+    per_tenant_url: true
+  - name: qa
+    per_tenant_url: true

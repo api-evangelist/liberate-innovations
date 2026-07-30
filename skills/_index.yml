@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/liberate-innovations-orchestration-openapi.yml
+name: Liberate Orchestration Platform agent skills
+description: >-
+  Packaged Agent Skills for the Liberate Orchestration Platform API, one per documented marquee flow.
+  Every skill is grounded in a real operationId from
+  openapi/liberate-innovations-orchestration-openapi.yml and in the semantics published on
+  https://docs.liberateinc.com/ — no invented operations, parameters, or error codes. Liberate
+  publishes no AGENTS.md or first-party skill pack; these are API Evangelist generations.
+
+provider_published_skills: false
+searched:
+  - target: https://docs.liberateinc.com/
+    result: no AGENTS.md, skills, or agent guidance published
+  - target: https://www.liberateinc.com/
+    result: none
+
+skills:
+  - name: liberate-start-workflow
+    file: liberate-innovations-start-workflow.md
+    description: >-
+      Start a workflow orchestration by slug with optional seed context, and correctly handle the
+      synchronous versus asynchronous response contract.
+    operations:
+      - startWorkflow
+    side_effects: high
+    requires_confirmation: true
+
+  - name: liberate-advance-workflow
+    file: liberate-innovations-advance-workflow.md
+    description: >-
+      Deliver an event to a workflow instance paused on an Intermediate Event, resuming a
+      long-running or human-in-the-loop orchestration.
+    operations:
+      - sendIntermediateEvent
+    side_effects: high
+    requires_confirmation: true
+
+shared_cautions:
+  - Neither operation is idempotent; no idempotency key is published. Do not retry blindly.
+  - >-
+    The base URL and bearer token are per-customer and per-environment (production and QA). Read both
+    from configuration; never hardcode.
+  - >-
+    Workflow slugs and Intermediate Event message strings are not discoverable over the API. They
+    must be supplied out of band from the Liberate canvas.
+  - >-
+    No error catalog, no RFC 9457 problem details, and no published rate limits. Treat non-2xx as
+    opaque and inspect the session in the Liberate reporting interface.
+  - >-
+    Workflows write into live insurance systems — claims, policies, rating engines, CRMs, and
+    customer notifications. Both operations should require explicit human confirmation in production.

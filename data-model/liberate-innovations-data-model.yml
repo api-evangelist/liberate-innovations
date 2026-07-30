@@ -1,0 +1,254 @@
+generated: '2026-07-19'
+method: derived
+source: >-
+  openapi/liberate-innovations-orchestration-openapi.yml, https://docs.liberateinc.com/docs/overview
+name: Liberate Orchestration Platform data model
+description: >-
+  Entity-relationship graph for the Liberate Orchestration Platform, derived from the documented
+  domain model (projects, workflows, revisions, releases, sessions, connections, tasks, events,
+  decision tables, entity files) and from the request/response schemas in the generated OpenAPI. Most
+  of these entities are managed through the Liberate canvas and reporting UI rather than exposed as
+  REST resources — only Workflow (by slug) and Session (by instanceId) are addressable over the
+  documented HTTP API.
+
+id_conventions:
+  - entity: Workflow
+    identifier: slug
+    format: >-
+      Human-readable name plus a UUID, e.g. simple-flow-d9379aa1-2508-49a2-b7be-7537013535f0
+    source: https://docs.liberateinc.com/docs/calling-a-workflow
+  - entity: Session
+    identifier: instanceId
+    format: opaque unique identifier assigned per workflow run
+  - entity: Session
+    identifier: correlationId
+    format: >-
+      Opaque identifier of the parent orchestrating workflow, shared across child workflow instances
+
+entities:
+  - name: Project
+    description: >-
+      Organizational grouping for related workflows and the connections available to them.
+      Connections must be available within a project before a REST Task can select one.
+    api_addressable: false
+    relationships:
+      - type: has_many
+        target: Workflow
+      - type: has_many
+        target: Connection
+
+  - name: Workflow
+    description: >-
+      A modular, reusable orchestration authored on the Liberate canvas, composed of connections,
+      events, and tasks. Typed as either synchronous (runs to completion and returns the end output)
+      or asynchronous (returns immediately and may run for minutes, hours, or days).
+    api_addressable: true
+    addressed_by: slug
+    operations:
+      - startWorkflow
+    fields:
+      - name: slug
+        type: string
+      - name: type
+        type: string
+        enum:
+          - synchronous
+          - asynchronous
+    relationships:
+      - type: belongs_to
+        target: Project
+      - type: has_many
+        target: Revision
+      - type: has_many
+        target: Release
+      - type: has_many
+        target: Session
+      - type: has_many
+        target: Task
+      - type: has_many
+        target: Event
+      - type: has_many
+        target: DecisionTable
+      - type: has_many
+        target: Workflow
+        via: workflow instance task
+        note: >-
+          A workflow may invoke other workflows as Workflow Instance Tasks, making the graph
+          self-referential. The invoking workflow becomes the orchestrator and contributes the
+          correlationId.
+
+  - name: Revision
+    description: >-
+      An automatically saved snapshot of a workflow, created whenever the workflow differs from the
+      last saved state. Viewable through Version History and may carry release notes.
+    api_addressable: false
+    relationships:
+      - type: belongs_to
+        target: Workflow
+      - type: has_many
+        target: Release
+
+  - name: Release
+    description: >-
+      A deployable artifact cut from the current version or from an earlier revision, carrying
+      release notes and deployed to a target environment (QA or production). Rollback redeploys a
+      previous known-good release.
+    api_addressable: false
+    fields:
+      - name: environment
+        type: string
+        enum:
+          - qa
+          - production
+    relationships:
+      - type: belongs_to
+        target: Workflow
+      - type: belongs_to
+        target: Revision
+
+  - name: Session
+    description: >-
+      One individual run of a workflow. Carries the Instance ID used to track progress, status, and
+      outcome, and the Correlation ID grouping it with the rest of its orchestration. The reporting
+      interface organizes in-progress, completed, and failed sessions at the Correlation ID level
+      and exposes the chronological task sequence, data flow, and the context object.
+    api_addressable: true
+    addressed_by: instanceId
+    operations:
+      - sendIntermediateEvent
+    fields:
+      - name: instanceId
+        type: string
+      - name: correlationId
+        type: string
+      - name: status
+        type: string
+        values_documented:
+          - in progress
+          - completed
+          - failed
+    relationships:
+      - type: belongs_to
+        target: Workflow
+      - type: has_one
+        target: Context
+      - type: belongs_to
+        target: Session
+        via: correlationId
+        note: Child sessions belong to the parent orchestrating session through the Correlation ID.
+
+  - name: Context
+    description: >-
+      The free-form JSON state of one running session. Initialized from the `context` field of the
+      start request, then written to by tasks, events, decision tables, and intermediate events
+      through named actions. Read downstream with JSONata (`$.actionName.{jsonobject}`,
+      `$.data.{jsonobject}` for an immediately following conditional, `$.context.{jsonobject}`
+      thereafter).
+    api_addressable: true
+    note: Supplied on startWorkflow and sendIntermediateEvent request bodies.
+    relationships:
+      - type: belongs_to
+        target: Session
+
+  - name: Connection
+    description: >-
+      A configured integration with an external system, API, or service. Every connection carries
+      separate base URLs and credentials for the QA and production environments plus optional
+      key-value secrets per environment.
+    api_addressable: false
+    fields:
+      - name: name
+        type: string
+      - name: description
+        type: string
+      - name: type
+        type: string
+        enum:
+          - No Authentication
+          - Basic Authentication
+          - Bearer Token
+          - API Key
+          - OAuth 2
+          - PostgreSQL
+    relationships:
+      - type: belongs_to
+        target: Project
+      - type: has_many
+        target: Task
+        via: connection selected by REST Task
+
+  - name: Task
+    description: >-
+      A unit of work inside a workflow. Documented types are REST Task (HTTP call through a
+      Connection, with JSONata request and response transformations), Mapping Task (JSONata
+      reshaping), Code Task, and Error Task.
+    api_addressable: false
+    fields:
+      - name: type
+        type: string
+        enum:
+          - REST Task
+          - Mapping Task
+          - Code Task
+          - Error Task
+    relationships:
+      - type: belongs_to
+        target: Workflow
+      - type: has_one
+        target: Connection
+        note: REST Tasks only.
+      - type: has_one
+        target: Task
+        via: error path
+        note: A task prone to failure routes to a dedicated Error Task.
+
+  - name: Event
+    description: >-
+      A trigger or synchronization point. Start Events begin a workflow and carry the per-environment
+      curl invocation. Intermediate Events pause a running instance until an event is delivered.
+      End Events mark a session complete for reporting.
+    api_addressable: true
+    addressed_by: instanceId
+    fields:
+      - name: kind
+        type: string
+        enum:
+          - start
+          - intermediate
+          - end
+    relationships:
+      - type: belongs_to
+        target: Workflow
+      - type: belongs_to
+        target: Session
+        note: Intermediate events target a specific running session.
+
+  - name: DecisionTable
+    description: >-
+      A visual representation of business rules, defining conditions and outcomes so a workflow can
+      make automated decisions from context data.
+    api_addressable: false
+    relationships:
+      - type: belongs_to
+        target: Workflow
+
+  - name: EntityFile
+    description: >-
+      An uploaded CSV dataset usable during workflow development, for example mapping country codes
+      to country names. Version-tracked with audit controls; replacement requires a comment and
+      immediately affects all QA and production workflows referencing it. No built-in rollback.
+    api_addressable: false
+    fields:
+      - name: state
+        type: string
+        enum:
+          - Current
+          - Uploading
+          - Archived
+          - Failed
+    relationships:
+      - type: has_many
+        target: Task
+        via: referenced during data mapping
+
+render: null

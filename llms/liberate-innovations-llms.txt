@@ -1,0 +1,9 @@
+# Liberate Orchestration Platform Documentation
+
+> Documentation for Liberate Orchestration Platform
+
+## Guides
+- [Documentation](https://docs.liberateinc.com/docs.md): Liberate Orchestration Platform documentation
+
+## Changelog
+- [Welcome to Liberate Orchestration Platform](https://docs.liberateinc.com/changelog/welcome-to-liberate-orchestration-platform.md)

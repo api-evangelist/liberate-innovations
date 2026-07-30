@@ -1,0 +1,109 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the Liberate Orchestration Platform API
+  version: 1.0.0
+  description: |
+    Applies the API Evangelist enrichment pipeline's annotations to
+    openapi/liberate-innovations-orchestration-openapi.yml without mutating it. Every value asserted
+    here is grounded in a repo artifact or a published Liberate page — this overlay adds discovery
+    and governance metadata, it does not add capability the provider does not have.
+
+    generated: '2026-07-19'
+    method: generated
+    source: openapi/liberate-innovations-orchestration-openapi.yml
+extends: ../openapi/liberate-innovations-orchestration-openapi.yml
+actions:
+  - target: $.info
+    description: Attach provider identity and catalog cross-references.
+    update:
+      x-provider: Liberate Innovations, Inc.
+      x-provider-slug: liberate-innovations
+      x-industry: Insurance
+      x-category: Workflow Orchestration
+      x-apis-json: https://raw.githubusercontent.com/api-evangelist/liberate-innovations/refs/heads/main/apis.yml
+      x-artifacts:
+        authentication: authentication/liberate-innovations-authentication.yml
+        conventions: conventions/liberate-innovations-conventions.yml
+        lifecycle: lifecycle/liberate-innovations-lifecycle.yml
+        changelog: changelog/liberate-innovations-changelog.yml
+        conformance: conformance/liberate-innovations-conformance.yml
+        data_model: data-model/liberate-innovations-data-model.yml
+        sandbox: sandbox/liberate-innovations-sandbox.yml
+        trust_center: security/liberate-innovations-trust-center.yml
+        domain_security: security/liberate-innovations-domain-security.yml
+        mcp: mcp/liberate-innovations-mcp.yml
+        skills: skills/_index.yml
+        llms_txt: llms/liberate-innovations-llms.txt
+
+  - target: $.info
+    description: Record governance posture derived from the conformance and lifecycle artifacts.
+    update:
+      x-governance:
+        machine_readable_spec_published_by_provider: false
+        error_catalog_published: false
+        rfc9457: false
+        idempotency_keys: false
+        rate_limits_published: false
+        status_page: false
+        deprecation_policy: false
+        sunset_headers: false
+        webhooks: false
+        asyncapi: false
+        compliance_claimed:
+          - SOC 2
+          - HIPAA
+          - PCI DSS
+          - GDPR
+          - CCPA
+
+  - target: $.servers[0]
+    description: >-
+      Record the probe result for the published production example host so consumers know the URL is
+      a template, not a shared endpoint.
+    update:
+      x-probe:
+        date: '2026-07-19'
+        url: https://integration.liberateinc.io
+        status: 000
+        result: did not resolve from the public internet
+        interpretation: >-
+          Expected. Liberate assigns each customer a unique endpoint URL; the documented host is an
+          example. A related documented host, integration-core-dev-api.liberateinc.io, does resolve
+          and returned HTTP 404 at the root.
+
+  - target: $.components.securitySchemes.bearerAuth
+    description: Cross-reference the authentication artifact and record provisioning posture.
+    update:
+      x-self-service: false
+      x-provisioned-by: Liberate
+      x-per-environment: true
+      x-artifact: authentication/liberate-innovations-authentication.yml
+      x-docs: https://docs.liberateinc.com/docs/calling-a-workflow
+
+  - target: $.paths['/'].put
+    description: Flag side-effect risk and link the packaged agent skill.
+    update:
+      x-side-effects: high
+      x-idempotent: false
+      x-agent-guidance: >-
+        Creates a new workflow session on every call and may trigger real downstream writes into
+        connected insurance systems. Confirm with a human before invoking in production.
+      x-skill: skills/liberate-innovations-start-workflow.md
+
+  - target: $.paths['/xmanager/event'].post
+    description: Flag approval semantics and link the packaged agent skill.
+    update:
+      x-side-effects: high
+      x-idempotent: false
+      x-agent-guidance: >-
+        Resumes a paused orchestration and is often the human-in-the-loop approval step. Never send
+        speculatively; verify the instanceId belongs to the session you intend to advance.
+      x-skill: skills/liberate-innovations-advance-workflow.md
+
+  - target: $.tags
+    description: Note that tag coverage reflects the entire documented public surface.
+    update:
+      - name: Workflows
+        x-operation-count: 1
+      - name: Events
+        x-operation-count: 1

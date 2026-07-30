@@ -1,0 +1,94 @@
+generated: '2026-07-19'
+method: probed
+source: HTTP probe of Liberate hosts, 2026-07-19
+name: Liberate Innovations well-known probe
+description: >-
+  Probe of the standard /.well-known/ discovery paths across every Liberate host known to the
+  catalog. No well-known documents are published. The app.liberateinc.com results are recorded as
+  HTTP 200 but are NOT real documents — that host is a single-page application (built with refine)
+  that serves its index.html for any unmatched path, so every probe returned the SPA shell with
+  content-type text/html. They are marked found: false accordingly.
+hosts:
+  - host: www.liberateinc.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        found: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        found: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        found: false
+      - path: /.well-known/api-catalog
+        status: 404
+        found: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        found: false
+  - host: liberateinc.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        found: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        found: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        found: false
+      - path: /.well-known/api-catalog
+        status: 404
+        found: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        found: false
+  - host: docs.liberateinc.com
+    probes:
+      - path: /.well-known/security.txt
+        status: 404
+        found: false
+      - path: /.well-known/openid-configuration
+        status: 404
+        found: false
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        found: false
+      - path: /.well-known/api-catalog
+        status: 404
+        found: false
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        found: false
+  - host: app.liberateinc.com
+    note: >-
+      SPA catch-all. All paths return HTTP 200 with content-type text/html and the application
+      shell. Not discovery documents.
+    probes:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        found: false
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        found: false
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        found: false
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        found: false
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        found: false
+summary:
+  documents_found: 0
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  ai_plugin: false

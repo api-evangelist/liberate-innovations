@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.liberateinc.com/changelog
+url: https://docs.liberateinc.com/changelog
+name: Liberate Orchestration Platform changelog
+description: >-
+  Liberate publishes a dated changelog on its ReadMe-hosted developer hub. The channel exists and is
+  wired into the docs navigation, but it is effectively dormant — a single launch entry, with no
+  subsequent releases published. The substantive change history for the platform lives in the
+  marketing news feed and in per-customer release notes inside the application, neither of which is
+  a developer-facing API changelog.
+
+scheme: dated entries (ReadMe changelog)
+current_version: '1.0'
+breaking_change_policy: not published
+subscribe:
+  rss: false
+  email: false
+  notes: No RSS feed or email subscription is exposed for the changelog.
+
+entries:
+  - title: Welcome to Liberate Orchestration Platform
+    url: https://docs.liberateinc.com/changelog/welcome-to-liberate-orchestration-platform
+    author: Jason St Pierre
+    date_relative: about 3 years ago
+    date_precise: null
+    type: announcement
+    breaking: false
+    additions: []
+    highlights:
+      - Launch of the Liberate Orchestration Platform developer hub and documentation.
+
+entry_count: 1
+last_entry_relative: about 3 years ago
+cadence: dormant
+
+related_feeds:
+  - name: Liberate news
+    url: https://www.liberateinc.com/news
+    note: Company and product news, not an API changelog.
+  - name: Liberate blog
+    url: https://www.liberateinc.com/blog
+    note: >-
+      Marketing and thought-leadership content. No RSS or Atom feed is exposed (/blog/rss.xml,
+      /blog/feed.xml, /rss.xml, and /feed.xml all return 404).
+
+caveats:
+  - >-
+    ReadMe renders relative timestamps only; no machine-readable publication date is exposed on the
+    changelog entry, so date_precise is left null rather than guessed.
+  - >-
+    Guide pages across the hub are stamped "Updated over 1 year ago", indicating the documentation
+    set as a whole has not been revised recently.

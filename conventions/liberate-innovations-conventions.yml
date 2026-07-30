@@ -1,0 +1,143 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.liberateinc.com/docs/overview
+docs: https://docs.liberateinc.com/
+name: Liberate Orchestration Platform API conventions
+description: >-
+  Cross-cutting runtime semantics for the Liberate Orchestration Platform API, read from the public
+  developer hub and cross-checked against openapi/liberate-innovations-orchestration-openapi.yml.
+  Liberate publishes a deliberately small HTTP surface — the API is a trigger for workflows authored
+  visually on the Liberate canvas — so several conventions that a large CRUD API would document
+  (pagination, sparse fieldsets, expansion) genuinely do not apply. Those are recorded as
+  not_applicable rather than absent.
+
+auth:
+  style: bearer token
+  header: Authorization
+  format: 'Bearer <token>'
+  documented: true
+  detail: authentication/liberate-innovations-authentication.yml
+  docs: https://docs.liberateinc.com/docs/calling-a-workflow
+
+base_url:
+  per_tenant: true
+  detail: >-
+    Every customer is assigned their own unique endpoint URL. The production example published in
+    the docs is https://integration.liberateinc.io. A customer's real URL is shown in the Start
+    Event curl example for each workflow.
+  environments:
+    - production
+    - qa
+  docs: https://docs.liberateinc.com/docs/calling-a-workflow
+
+idempotency:
+  supported: false
+  documented: false
+  detail: >-
+    No idempotency key header, no retry-safety guarantee, and no deduplication window are documented
+    for either startWorkflow or sendIntermediateEvent. Note that startWorkflow uses the PUT method,
+    which is idempotent by HTTP semantics, but Liberate does not document PUT here as
+    execute-at-most-once — each PUT creates a new workflow session with a new Instance ID, so the
+    operation should be treated as NOT idempotent in practice. Retry logic is instead pushed into
+    the workflow itself via Error Tasks, which can perform error recovery, retry the failed task, or
+    take alternative actions.
+  error_task_retry_docs: https://docs.liberateinc.com/docs/error-task
+
+pagination:
+  applicable: false
+  detail: >-
+    The public API exposes no list or collection endpoints, so no pagination convention exists.
+    Session and workflow browsing happens in the Liberate reporting interface, not over the
+    documented API.
+
+field_expansion:
+  applicable: false
+sparse_fieldsets:
+  applicable: false
+
+metadata:
+  supported: true
+  mechanism: context object
+  detail: >-
+    Arbitrary caller-supplied JSON travels with a workflow in the `context` object, supplied at
+    start time and enriched during execution. Context is namespaced by action name and read
+    downstream with JSONata expressions of the form `$.actionName.{jsonobject}`. Within a
+    conditional immediately following a component use `$.data.{jsonobject}`; for subsequent
+    conditionals use `$.context.{jsonobject}`.
+  docs: https://docs.liberateinc.com/docs/context-data-and-actions
+
+request_tracing:
+  supported: true
+  mechanism: response body identifiers (not headers)
+  identifiers:
+    - name: instanceId
+      description: >-
+        Unique identifier assigned to each individual run of a workflow. Tracks the progress,
+        status, and outcome of one workflow session, and is the handle used to deliver intermediate
+        events to that session.
+    - name: correlationId
+      description: >-
+        Identifier of the parent workflow acting as orchestrator, grouping related workflow
+        instances invoked through Workflow Instance Tasks. The reporting interface organizes
+        sessions at the Correlation ID level.
+  header_based: false
+  detail: >-
+    No X-Request-Id / Request-Id response header is documented. Correlation is carried in the
+    payload, not in HTTP headers.
+  docs: https://docs.liberateinc.com/docs/workflow-and-session-reporting
+
+versioning:
+  scheme: documentation version selector
+  current: '1.0'
+  in_url: false
+  in_header: false
+  detail: >-
+    The developer hub is published under a v1.0 version selector. The API paths themselves carry no
+    version segment. Customer-facing change control is handled by Liberate's Release Management —
+    autosaved revisions, named releases with release notes, deployment to QA or production, and
+    rollback to a previous known-good release — which versions the workflows a customer builds
+    rather than the HTTP contract.
+  detail_ref: lifecycle/liberate-innovations-lifecycle.yml
+  docs: https://docs.liberateinc.com/docs/release-management
+
+data_transformation:
+  language: JSONata
+  detail: >-
+    Request and response payloads are reshaped with JSONata expressions in Mapping Tasks and in the
+    Request/Response Transformation sections of a REST Task. A transformation declares a `type`
+    (for example `body` or `headers`) and an `expression`.
+  docs: https://docs.liberateinc.com/docs/rest-task
+
+error_envelope:
+  format: not documented
+  rfc9457: false
+  detail: >-
+    Liberate publishes no error response schema, no error code catalog, and no problem+json
+    envelope for the HTTP API. Error handling is documented as a workflow-design concern: an Error
+    Task attached to a task catches failures, defines the recovery behavior, and reports the error
+    occurrence into the Liberate reporting system for monitoring and root-cause analysis. Because no
+    catalog is published, no errors/liberate-innovations-problem-types.yml artifact was produced —
+    fabricating one would be inventing codes the provider has never documented.
+  docs: https://docs.liberateinc.com/docs/error-task
+
+rate_limiting:
+  documented: false
+  detail: >-
+    No rate limit, quota, or throttling policy is published for the Liberate Orchestration Platform
+    API, and no RateLimit / X-RateLimit response headers are documented. (The x-ratelimit-limit
+    header observed on docs.liberateinc.com belongs to the ReadMe documentation host, not to the
+    Liberate API.)
+
+async_semantics:
+  documented: true
+  detail: >-
+    Workflows are either synchronous or asynchronous. Both respond immediately with a status code
+    and an Instance ID. A synchronous flow then runs to completion and returns the flow's end output
+    as the response. An asynchronous flow returns immediately and continues in the background for
+    minutes, hours, or days, pausing at Intermediate Events until an event is delivered to
+    POST /xmanager/event or a human takes action.
+  docs: https://docs.liberateinc.com/docs/liberate-workflow-types
+
+content_type:
+  request: application/json
+  response: application/json
