@@ -116,6 +116,10 @@ apis:
   - type: LLMsTxt
     url: llms/liberate-innovations-llms.txt
 common:
+- type: MCPServer
+  url: mcp/liberate-innovations-mcp.yml
+- type: Overlay
+  url: overlays/liberate-innovations-orchestration-overlay.yaml
 - type: DomainSecurity
   url: security/liberate-innovations-domain-security.yml
 - type: DeveloperPortal
