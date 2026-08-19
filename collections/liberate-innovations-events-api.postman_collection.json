@@ -1,0 +1,190 @@
+{
+  "item": [
+    {
+      "id": "156da8cb-fbbf-436f-bd86-b540634839fe",
+      "name": "Events",
+      "description": {
+        "content": "Advance workflow instances that are paused on an intermediate event.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22904f2b-cdc5-42fd-813d-98f8d275cc85",
+          "name": "Send an intermediate event to a running workflow instance",
+          "request": {
+            "name": "Send an intermediate event to a running workflow instance",
+            "description": {
+              "content": "Advances a workflow instance that is paused on an Intermediate Event. Intermediate events\nact as synchronization points, letting a workflow wait on an asynchronous operation, an\nexternal system response, or a human-in-the-loop decision before proceeding.\n\nThe payload carries the `instanceId` of the paused workflow session, the `event` message\ndescribing the event or operation, and optionally a `context` object with data relevant to\nthe event. Once received, the workflow continues with the following step; an optional action\nname and action transformation can reshape the delivered data into the workflow context.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "xmanager",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instanceId\": \"<string>\",\n  \"event\": \"<string>\",\n  \"context\": {\n    \"key_0\": 8706.039427838961,\n    \"key_1\": 8339,\n    \"key_2\": false,\n    \"key_3\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "331dde3c-7a11-4d62-bf41-bdaad1fa18b7",
+              "name": "The event was delivered and the workflow instance resumed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xmanager",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"<your instance id>\",\n  \"event\": \"<your event message here>\",\n  \"context\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31eab5e2-aff6-4a5d-b323-c85ed3447c4a",
+              "name": "Missing or invalid bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "xmanager",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instanceId\": \"<your instance id>\",\n  \"event\": \"<your event message here>\",\n  \"context\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integration.liberateinc.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "769ea6f0-69c2-4608-beee-e9175effb28e",
+    "name": "Liberate Orchestration Platform Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Liberate Orchestration Platform exposes a small HTTP surface for driving workflow\norchestrations built on the Liberate canvas. Two operations are publicly documented on the\nLiberate developer hub:\n\n  * Starting a workflow (a \"Start Event\") by PUTting a flow `slug` plus an optional `context`\n    object to the customer's integration endpoint.\n  * Advancing a paused workflow instance by POSTing an intermediate `event` (plus the\n    `instanceId` and optional `context`) to `/xmanager/event`.\n\nEvery Liberate customer is issued their own unique endpoint URL, and every customer has both a\nproduction and a QA environment. The exact curl invocation for a given workflow is shown in the\nproperties panel of that workflow's Start Event inside the Liberate application. The server URL\nbelow is the production example published in the documentation; substitute your tenant's URL.\n\nAuthentication is a bearer token issued by Liberate.\n\nNOTE ON PROVENANCE: Liberate does not publish a machine-readable OpenAPI description. This\ndefinition was generated by the API Evangelist enrichment pipeline strictly from the request\nand response semantics documented on https://docs.liberateinc.com/. Only documented paths,\nmethods, headers, and body fields are represented here; nothing has been invented. Response\nschemas are intentionally loose because the documentation states the response \"will depend on\nthe logic and implementation of the flow itself.\"\n\n\nContact Support:\n Name: Liberate Support",
+      "type": "text/plain"
+    }
+  }
+}

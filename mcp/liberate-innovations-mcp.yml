@@ -3,86 +3,78 @@ method: derived
 source: openapi/liberate-innovations-orchestration-openapi.yml
 name: Liberate Orchestration Platform MCP candidate
 status: candidate
-description: >-
-  Liberate publishes no official hosted or remote Model Context Protocol server. No MCP endpoint,
-  npm/PyPI MCP package, registry listing, or mcp.json manifest was found on any Liberate host or in
-  the public registries. This file is a DERIVED candidate tool list computed from the two documented
-  operations in openapi/liberate-innovations-orchestration-openapi.yml — a proposal for what a
-  Liberate MCP server would expose, not a description of anything Liberate ships.
-
+description: Liberate publishes no official hosted or remote Model Context Protocol server. No MCP endpoint,
+  npm/PyPI MCP package, registry listing, or mcp.json manifest was found on any Liberate host or in the
+  public registries. This file is a DERIVED candidate tool list computed from the two documented operations
+  in openapi/liberate-innovations-orchestration-openapi.yml — a proposal for what a Liberate MCP server
+  would expose, not a description of anything Liberate ships.
 official:
   exists: false
   searched:
-    - target: https://docs.liberateinc.com/
-      result: no MCP documentation
-    - target: npm registry (text search "liberateinc")
-      result: 0 packages
-    - target: /.well-known/ paths across all Liberate hosts
-      result: no manifest (see well-known/liberate-innovations-well-known.yml)
-    - target: mcp.liberateinc.com and api.liberateinc.com
-      result: no MCP surface (api.liberateinc.com resolves but returns 404 at root)
-
+  - target: https://docs.liberateinc.com/
+    result: no MCP documentation
+  - target: npm registry (text search "liberateinc")
+    result: 0 packages
+  - target: /.well-known/ paths across all Liberate hosts
+    result: no manifest (see well-known/liberate-innovations-well-known.yml)
+  - target: mcp.liberateinc.com and api.liberateinc.com
+    result: no MCP surface (api.liberateinc.com resolves but returns 404 at root)
 transport: null
 endpoint: null
-
 candidate_tools:
-  - name: start_workflow
-    operationId: startWorkflow
-    method: PUT
-    path: /
-    description: >-
-      Start a Liberate workflow orchestration by slug, optionally seeding it with context data.
-      Returns a status and the Instance ID of the new session; synchronous flows also return the
-      flow's end output.
-    inputs:
-      - name: slug
-        type: string
-        required: true
-        description: The flow slug or identifier, from the workflow's Start Event properties.
-      - name: context
-        type: object
-        required: false
-        description: Initial JSON context written into the workflow context at start time.
-    auth: bearer token
-    idempotent: false
-    caution: >-
-      Each call creates a new workflow session and can trigger real downstream side effects in
-      connected insurance systems (claims filing, policy changes, CRM writes, outbound notifications).
-      An agent should treat this as a write operation requiring confirmation.
-
-  - name: send_intermediate_event
-    operationId: sendIntermediateEvent
-    method: POST
-    path: /xmanager/event
-    description: >-
-      Advance a workflow instance that is paused on an Intermediate Event by delivering an event
-      message, optionally with context data.
-    inputs:
-      - name: instanceId
-        type: string
-        required: true
-        description: Instance ID of the paused workflow session.
-      - name: event
-        type: string
-        required: true
-        description: The event message describing the event or operation that occurred.
-      - name: context
-        type: object
-        required: false
-        description: Additional JSON context to merge for downstream steps.
-    auth: bearer token
-    idempotent: false
-    caution: >-
-      Resumes a live orchestration. Frequently the human-in-the-loop approval step, so delivering an
-      event may constitute an approval decision.
-
+- name: start_workflow
+  operationId: startWorkflow
+  method: PUT
+  path: /
+  description: Start a Liberate workflow orchestration by slug, optionally seeding it with context data.
+    Returns a status and the Instance ID of the new session; synchronous flows also return the flow's
+    end output.
+  inputs:
+  - name: slug
+    type: string
+    required: true
+    description: The flow slug or identifier, from the workflow's Start Event properties.
+  - name: context
+    type: object
+    required: false
+    description: Initial JSON context written into the workflow context at start time.
+  auth: bearer token
+  idempotent: false
+  caution: Each call creates a new workflow session and can trigger real downstream side effects in connected
+    insurance systems (claims filing, policy changes, CRM writes, outbound notifications). An agent should
+    treat this as a write operation requiring confirmation.
+- name: send_intermediate_event
+  operationId: sendIntermediateEvent
+  method: POST
+  path: /xmanager/event
+  description: Advance a workflow instance that is paused on an Intermediate Event by delivering an event
+    message, optionally with context data.
+  inputs:
+  - name: instanceId
+    type: string
+    required: true
+    description: Instance ID of the paused workflow session.
+  - name: event
+    type: string
+    required: true
+    description: The event message describing the event or operation that occurred.
+  - name: context
+    type: object
+    required: false
+    description: Additional JSON context to merge for downstream steps.
+  auth: bearer token
+  idempotent: false
+  caution: Resumes a live orchestration. Frequently the human-in-the-loop approval step, so delivering
+    an event may constitute an approval decision.
 constraints:
-  - >-
-    The base URL is per-tenant. An MCP server would need the customer's own endpoint URL and bearer
-    token configured; there is no shared public host to point at.
-  - >-
-    Both environments (production and QA) have distinct URLs and tokens, so environment selection
-    must be explicit rather than inferred.
-  - >-
-    Workflow slugs are not discoverable over the API — there is no list operation. An agent must be
-    given slugs out of band from the Liberate canvas.
+- The base URL is per-tenant. An MCP server would need the customer's own endpoint URL and bearer token
+  configured; there is no shared public host to point at.
+- Both environments (production and QA) have distinct URLs and tokens, so environment selection must be
+  explicit rather than inferred.
+- Workflow slugs are not discoverable over the API — there is no list operation. An agent must be given
+  slugs out of band from the Liberate canvas.
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

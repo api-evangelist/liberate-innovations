@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Liberate Orchestration Platform Events Workflows API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workflows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start a workflow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://integration.liberateinc.io/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Triggers a Liberate flow. The request body carries the flow `slug` (the workflow identifier)\nand a `context` object holding any initial data the workflow should start with. Context data\nsupplied here is automatically written into the workflow context and becomes available to\nevery downstream component.\n\nSynchronous flows respond immediately with a status code and instance ID and continue to run\nto completion, returning the end output of the flow as the response. Asynchronous flows also\nrespond i"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

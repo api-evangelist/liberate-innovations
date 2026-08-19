@@ -1,0 +1,195 @@
+{
+  "item": [
+    {
+      "id": "df23de56-8b63-406b-a7f1-255b2a107891",
+      "name": "Workflows",
+      "description": {
+        "content": "Start workflow orchestrations and pass context data into them.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f0fdd99-c8ed-4243-8732-6af234b9a42a",
+          "name": "Start a workflow",
+          "request": {
+            "name": "Start a workflow",
+            "description": {
+              "content": "Triggers a Liberate flow. The request body carries the flow `slug` (the workflow identifier)\nand a `context` object holding any initial data the workflow should start with. Context data\nsupplied here is automatically written into the workflow context and becomes available to\nevery downstream component.\n\nSynchronous flows respond immediately with a status code and instance ID and continue to run\nto completion, returning the end output of the flow as the response. Asynchronous flows also\nrespond immediately with a status code and instance ID, then continue running in the\nbackground — potentially for minutes, hours, or days — while awaiting intermediate events or\nhuman interaction.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slug\": \"<string>\",\n  \"context\": {\n    \"key_0\": 2797.8653401082997\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "91fcf234-de2f-4ea9-8037-2375f558d681",
+              "name": "The workflow was accepted. Synchronous flows return the end output of the flow; asynchronous flows return a status and the instance ID of the newly created session. The concrete shape depends on the logic of the triggered flow.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slug\": \"simple-flow-d9379aa1-2508-49a2-b7be-7537013535f0\",\n  \"context\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"instanceId\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aea654e5-c1e0-4e46-a7ec-520c4b7ed1fa",
+              "name": "Missing or invalid bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slug\": \"simple-flow-d9379aa1-2508-49a2-b7be-7537013535f0\",\n  \"context\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://integration.liberateinc.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4dff5642-32bd-4ac9-a679-7eded0b8453a",
+    "name": "Liberate Orchestration Platform Events Workflows API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Liberate Orchestration Platform exposes a small HTTP surface for driving workflow\norchestrations built on the Liberate canvas. Two operations are publicly documented on the\nLiberate developer hub:\n\n  * Starting a workflow (a \"Start Event\") by PUTting a flow `slug` plus an optional `context`\n    object to the customer's integration endpoint.\n  * Advancing a paused workflow instance by POSTing an intermediate `event` (plus the\n    `instanceId` and optional `context`) to `/xmanager/event`.\n\nEvery Liberate customer is issued their own unique endpoint URL, and every customer has both a\nproduction and a QA environment. The exact curl invocation for a given workflow is shown in the\nproperties panel of that workflow's Start Event inside the Liberate application. The server URL\nbelow is the production example published in the documentation; substitute your tenant's URL.\n\nAuthentication is a bearer token issued by Liberate.\n\nNOTE ON PROVENANCE: Liberate does not publish a machine-readable OpenAPI description. This\ndefinition was generated by the API Evangelist enrichment pipeline strictly from the request\nand response semantics documented on https://docs.liberateinc.com/. Only documented paths,\nmethods, headers, and body fields are represented here; nothing has been invented. Response\nschemas are intentionally loose because the documentation states the response \"will depend on\nthe logic and implementation of the flow itself.\"\n\n\nContact Support:\n Name: Liberate Support",
+      "type": "text/plain"
+    }
+  }
+}

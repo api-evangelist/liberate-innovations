@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Liberate Orchestration Platform Events API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send an intermediate event to a running workflow instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://integration.liberateinc.io/xmanager/event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Advances a workflow instance that is paused on an Intermediate Event. Intermediate events\nact as synchronization points, letting a workflow wait on an asynchronous operation, an\nexternal system response, or a human-in-the-loop decision before proceeding.\n\nThe payload carries the `instanceId` of the paused workflow session, the `event` message\ndescribing the event or operation, and optionally a `context` object with data relevant to\nthe event. Once received, the workflow continues with the follow"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
