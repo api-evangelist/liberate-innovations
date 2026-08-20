@@ -38,6 +38,17 @@ modified: '2026-07-19'
 tags:
 - Company
 - Insurance
+- Insurtech
+- Artificial Intelligence
+- Voice AI
+- Conversational AI
+- Workflow Orchestration
+- Claims Automation
+- Integration
+- Contact Center
+tags_raw:
+- Company
+- Insurance
 - InsurTech
 - Artificial Intelligence
 - Voice AI
@@ -53,6 +64,8 @@ apis:
   humanURL: https://docs.liberateinc.com/
   baseURL: https://integration.liberateinc.io
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
