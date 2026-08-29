@@ -12,6 +12,18 @@ description: >-
   starts workflows by slug and advances paused instances with intermediate events. Liberate
   integrates with Guidewire, Duck Creek, Salesforce, Vertafore, Applied, EZLynx, Insuresoft,
   TurboRater, Verisk, CCC, CoreLogic, Snapsheet, and Microsoft Outlook.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: open
