@@ -34,6 +34,7 @@ accessModel:
   confidence: medium
   source:
   - authentication
+  - {url: 'https://www.liberateinc.com/', status: 301, note: 'declared website redirects to https://www.liberate.ai/ — a different registrable domain (liberateinc.com -> liberate.ai), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
   generated: '2026-07-22'
   method: derived
 image: https://cdn.prod.website-files.com/69d93976ca90059d5696cd0b/69d93976ca90059d5696cef7_Webclip.png
@@ -141,8 +142,9 @@ apis:
   - type: LLMsTxt
     url: llms/liberate-innovations-llms.txt
 common:
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/liberate-innovations-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
 - type: Overlay
   url: overlays/liberate-innovations-orchestration-overlay.yaml
 - type: DomainSecurity
