@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Liberate Orchestration Platform Events Workflows API
   version: '1.0'
@@ -91,6 +91,10 @@ paths:
           description: Missing or invalid bearer token.
 components:
   schemas:
+    Context:
+      type: object
+      additionalProperties: true
+      description: Free-form JSON carrying the state of the automation process. Context is initialized at the start of a workflow and written to during execution by tasks, events, decision tables, and intermediate events. Values are addressed downstream with JSONata expressions such as `$.actionName.{jsonobject}`.
     WorkflowAcknowledgement:
       type: object
       additionalProperties: true
@@ -102,10 +106,6 @@ components:
         correlationId:
           type: string
           description: Identifier of the parent workflow acting as orchestrator, grouping related workflow instances invoked through Workflow Instance Tasks.
-    Context:
-      type: object
-      additionalProperties: true
-      description: Free-form JSON carrying the state of the automation process. Context is initialized at the start of a workflow and written to during execution by tasks, events, decision tables, and intermediate events. Values are addressed downstream with JSONata expressions such as `$.actionName.{jsonobject}`.
     StartWorkflowRequest:
       type: object
       required:

@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enrichment overlay for the Liberate Orchestration Platform API
   version: 1.0.0
-  description: |
+  x-description: |
     Applies the API Evangelist enrichment pipeline's annotations to
     openapi/liberate-innovations-orchestration-openapi.yml without mutating it. Every value asserted
     here is grounded in a repo artifact or a published Liberate page — this overlay adds discovery
