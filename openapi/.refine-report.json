@@ -1,8 +1,7 @@
 {
   "provider": "liberate-innovations",
   "sources": [
-    "liberate-innovations-events-api-openapi.yml",
-    "liberate-innovations-workflows-api-openapi.yml"
+    "_original/liberate-innovations-orchestration-openapi.yml"
   ],
   "outputs": [
     "liberate-innovations-events-api-openapi.yml",
@@ -12,9 +11,12 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "liberate-innovations-events-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "liberate-innovations-workflows-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "liberate-innovations-orchestration-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "liberate-innovations-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "liberate-innovations-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
