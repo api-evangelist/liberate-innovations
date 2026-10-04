@@ -71,6 +71,10 @@ paths:
           description: Missing or invalid bearer token.
 components:
   schemas:
+    Context:
+      type: object
+      additionalProperties: true
+      description: Free-form JSON carrying the state of the automation process. Context is initialized at the start of a workflow and written to during execution by tasks, events, decision tables, and intermediate events. Values are addressed downstream with JSONata expressions such as `$.actionName.{jsonobject}`.
     IntermediateEventRequest:
       type: object
       required:
@@ -85,10 +89,6 @@ components:
           description: The event message describing the event or operation that has occurred.
         context:
           $ref: '#/components/schemas/Context'
-    Context:
-      type: object
-      additionalProperties: true
-      description: Free-form JSON carrying the state of the automation process. Context is initialized at the start of a workflow and written to during execution by tasks, events, decision tables, and intermediate events. Values are addressed downstream with JSONata expressions such as `$.actionName.{jsonobject}`.
   securitySchemes:
     bearerAuth:
       type: http
