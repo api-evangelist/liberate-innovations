@@ -64,6 +64,115 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Liberate Innovations is a company surfaced as a portfolio company of battery-ventures and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Liberate Innovations, Inc. (trading as Liberate) is a Palo Alto, California company building insurance-native AI agents for sales, servicing, and claims. Its voice, email, and SMS AI resolves customer inquiries end to end — verifying identity, gathering loss details, and filing a claim without a human rep — and writes the results straight into the carrier's or agency's core systems. Underneath the customer-facing agents sits the Liberate Orchestration Platform, a visual workflow engine where developers compose modular workflows from connections, events, tasks, and decision tables, with JSONata transformations, release management across QA and production environments, and correlation-level session reporting. The platform is driven over a small documented HTTP API that starts workflows by slug and advances paused instances with intermediate events. Liberate integrates with Guidewire, Duck Creek, Salesforce, Vertafore, Applied, EZLynx, Insuresoft, TurboRater, Verisk, CCC, CoreLogic, Snapsheet, and Microsoft Outlook.
 
-Backed by: battery-ventures
+**Areas:** Company · Insurance · Insurtech · Artificial Intelligence · Voice AI · Conversational AI · Workflow Orchestration · Claims Automation · Integration · Contact Center
+
+## Liberate Innovations on APIs.io
+
+Everything profiled for Liberate Innovations is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/liberate-innovations/](https://apis.io/providers/liberate-innovations/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Liberate Innovations Events API](https://apis.io/apis/liberate-innovations/liberate-innovations-events-api/) — Advance workflow instances that are paused on an intermediate event.
+- [Liberate Innovations Workflows API](https://apis.io/apis/liberate-innovations/liberate-innovations-workflows-api/) — Start workflow orchestrations and pass context data into them.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Liberate Orchestration Platform MCP candidate](https://apis.io/servers/liberate-innovations/liberate-orchestration-platform-mcp-candidate/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [Liberate Orchestration Platform Events API](https://apis.io/collections/liberate-innovations/open-liberate-innovations-events-api/)
+- [Liberate Orchestration Platform Events Workflows API](https://apis.io/collections/liberate-innovations/open-liberate-innovations-workflows-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Liberate Innovations Orchestration Overlay](https://apis.io/overlays/liberate-innovations/liberate-innovations-orchestration-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Liberate Innovations Authentication](https://apis.io/security/liberate-innovations/liberate-innovations-authentication/)
+- [Liberate Innovations Domain Security](https://apis.io/security/liberate-innovations/liberate-innovations-domain-security/)
+- [Liberate Innovations Trust Center](https://apis.io/security/liberate-innovations/liberate-innovations-trust-center/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.liberateinc.com/)
+- [Documentation](https://docs.liberateinc.com/docs/overview)
+- [Getting started](https://docs.liberateinc.com/docs/overview)
+- [API reference](https://docs.liberateinc.com/docs/calling-a-workflow)
+- [Sign up](https://www.liberateinc.com/request-demo)
+- [Support](https://signup.liberateinc.com/contact-us)
+- [Changelog](https://docs.liberateinc.com/changelog)
+- [Blog](https://www.liberateinc.com/blog)
+- [Trust centre](https://app.vanta.com/liberateinc.com/trust/a3f4px3jh3gd2prixhl6)
+- [Terms of service](https://www.liberateinc.com/legal/terms-of-service)
+- [Privacy policy](https://www.liberateinc.com/legal/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 33.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 74.1 |
+| Contract quality | 14.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 61.3 |
+| Access clarity | 42.1 |
+
+**Agent readiness 21.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.5** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/liberate-innovations/](https://apis.io/providers/liberate-innovations/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Liberate Innovations: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/liberate-innovations/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
